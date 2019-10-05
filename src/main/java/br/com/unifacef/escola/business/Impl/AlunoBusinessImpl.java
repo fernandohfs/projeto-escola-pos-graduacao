@@ -26,6 +26,11 @@ public class AlunoBusinessImpl implements AlunoBusiness {
     }
 
     @Override
+    public Aluno create(Aluno aluno) {
+        return alunoRepository.save(aluno);
+    }
+
+    @Override
     public Aluno update(Integer alunoId, Aluno alunoUpdate) {
         Optional<Aluno> optionalAluno = alunoRepository.findById(alunoId);
         Aluno aluno = optionalAluno.get();

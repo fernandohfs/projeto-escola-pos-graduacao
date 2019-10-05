@@ -9,6 +9,7 @@ public interface AlunoBusiness {
 
     List<Aluno> find();
     Optional<Aluno> findBy(Integer id);
+    Aluno create(Aluno aluno);
     Aluno update(Integer id, Aluno aluno);
     void delete(Integer id);
 

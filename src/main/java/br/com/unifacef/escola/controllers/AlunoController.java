@@ -29,9 +29,11 @@ public class AlunoController {
 
     @PostMapping
     public ResponseEntity<Aluno> create(@RequestBody Aluno aluno) {
+        Aluno createdAluno = alunoBusiness.create(aluno);
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(aluno);
+                .body(createdAluno);
     }
 
     @PutMapping("/{id}")
