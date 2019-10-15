@@ -1,5 +1,7 @@
 package br.com.unifacef.escola.model;
 
+import br.com.unifacef.escola.contract.returnJson.MateriaReturn;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,12 +10,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -30,6 +31,10 @@ public class Materia implements Serializable {
     private Integer id;
     private String titulo;
     private String descricao;
+    @ManyToOne
+    @JoinColumn(name = "professor_id")
+    @JsonBackReference
+    private Professor professor;
     private char situacao;
     @CreationTimestamp
     private Date dataCriacao;

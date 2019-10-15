@@ -1,6 +1,7 @@
 package br.com.unifacef.escola.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,20 +9,18 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Professor implements Serializable {
 
     private static final long serialVersionUID = 4694847122323713499L;
@@ -35,6 +34,9 @@ public class Professor implements Serializable {
     private String cpf;
     private Date dataAdmissao;
     private Date dataDemissao;
+    @OneToMany(mappedBy = "professor", targetEntity = Materia.class, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Materia> materias = new ArrayList<>();
     @CreationTimestamp
     private Date dataCriacao;
     @UpdateTimestamp

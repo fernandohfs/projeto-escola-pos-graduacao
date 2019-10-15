@@ -1,6 +1,7 @@
 package br.com.unifacef.escola.controller;
 
 import br.com.unifacef.escola.business.MateriaBusiness;
+import br.com.unifacef.escola.contract.returnJson.MateriaReturn;
 import br.com.unifacef.escola.model.Materia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,24 +18,24 @@ public class MateriaController {
     private MateriaBusiness materiaBusiness;
 
     @GetMapping
-    public ResponseEntity<List<Materia>> find() {
+    public ResponseEntity<List<MateriaReturn>> find() {
         return ResponseEntity.ok(materiaBusiness.find());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Materia> findBy(@PathVariable Integer id) {
+    public ResponseEntity<MateriaReturn> findBy(@PathVariable Integer id) {
         return ResponseEntity.ok(materiaBusiness.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Materia> create(@RequestBody Materia materia) {
+    public ResponseEntity<MateriaReturn> create(@RequestBody Materia materia) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(materiaBusiness.create(materia));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Materia> update(
+    public ResponseEntity<MateriaReturn> update(
             @RequestBody Materia materia, @PathVariable Integer id) {
         return ResponseEntity.ok(materiaBusiness.update(id, materia));
     }
