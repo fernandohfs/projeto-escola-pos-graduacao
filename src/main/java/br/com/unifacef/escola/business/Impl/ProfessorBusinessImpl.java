@@ -13,16 +13,17 @@ import java.util.Optional;
 @Service
 public class ProfessorBusinessImpl implements ProfessorBusiness {
 
+    @Autowired
     private ProfessorRepository professorRepository;
 
-    @Autowired
-    public ProfessorBusinessImpl(ProfessorRepository professorRepository) {
-        this.professorRepository = professorRepository;
+    @Override
+    public List<Professor> find() {
+        return professorRepository.findAll();
     }
 
     @Override
-    public List<Professor> findAll() {
-        return professorRepository.findAll();
+    public Professor findBy(Integer id) {
+        return professorRepository.getOne(id);
     }
 
     @Override
@@ -31,14 +32,15 @@ public class ProfessorBusinessImpl implements ProfessorBusiness {
     }
 
     @Override
-    public Professor update(Integer id, Professor professor) {
+    public Professor update(Integer id, Professor professorUpdate) {
+        Professor professor = professorRepository.getOne(id);
+        professor.update(professorUpdate);
         return professorRepository.save(professor);
     }
 
-    public List<Professor> findBy(Integer id) {
-        List professor = new ArrayList<Professor>();
-        professor.add(professorRepository.findById(id).get());
-        return professor;
+    @Override
+    public void delete(Integer id) {
+        professorRepository.deleteById(id);
     }
 
 }

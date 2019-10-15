@@ -1,12 +1,12 @@
 package br.com.unifacef.escola.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,9 +21,10 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Professor implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4694847122323713499L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,4 +40,12 @@ public class Professor implements Serializable {
     @UpdateTimestamp
     private Date dataAtualizacao;
 
+    public void update(Professor professorUpdate) {
+        setNome(professorUpdate.getNome());
+        setEmail(professorUpdate.getEmail());
+        setDataNascimento(professorUpdate.getDataNascimento());
+        setCpf(professorUpdate.getCpf());
+        setDataAdmissao(professorUpdate.getDataAdmissao());
+        setDataDemissao(professorUpdate.getDataDemissao());
+    }
 }
