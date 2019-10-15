@@ -30,7 +30,9 @@ public class ProfessorController {
 
     @PostMapping
     public ResponseEntity<Professor> create(@RequestBody Professor professor) {
-        return ResponseEntity.ok(professorBusiness.create(professor));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(professorBusiness.create(professor));
     }
 
     @PutMapping("/{id}")
