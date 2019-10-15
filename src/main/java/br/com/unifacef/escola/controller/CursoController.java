@@ -1,4 +1,4 @@
-package br.com.unifacef.escola.controllers;
+package br.com.unifacef.escola.controller;
 
 import java.util.List;
 import java.util.Optional;

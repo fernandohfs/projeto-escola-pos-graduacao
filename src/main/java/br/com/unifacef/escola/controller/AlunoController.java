@@ -1,4 +1,4 @@
-package br.com.unifacef.escola.controllers;
+package br.com.unifacef.escola.controller;
 
 import br.com.unifacef.escola.business.AlunoBusiness;
 import br.com.unifacef.escola.model.Aluno;
