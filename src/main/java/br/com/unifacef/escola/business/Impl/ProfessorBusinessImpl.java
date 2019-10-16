@@ -1,6 +1,7 @@
 package br.com.unifacef.escola.business.Impl;
 
 import br.com.unifacef.escola.business.ProfessorBusiness;
+import br.com.unifacef.escola.contract.returnJson.professor.ProfessorReturn;
 import br.com.unifacef.escola.model.Professor;
 import br.com.unifacef.escola.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +18,25 @@ public class ProfessorBusinessImpl implements ProfessorBusiness {
     private ProfessorRepository professorRepository;
 
     @Override
-    public List<Professor> find() {
-        return professorRepository.findAll();
+    public List<ProfessorReturn> find() {
+        return ProfessorReturn.parse(professorRepository.findAll());
     }
 
     @Override
-    public Professor findBy(Integer id) {
-        return professorRepository.getOne(id);
+    public ProfessorReturn findBy(Integer id) {
+        return ProfessorReturn.parse(professorRepository.getOne(id));
     }
 
     @Override
-    public Professor create(Professor professor) {
-        return professorRepository.save(professor);
+    public ProfessorReturn create(Professor professor) {
+        return ProfessorReturn.parse(professorRepository.save(professor));
     }
 
     @Override
-    public Professor update(Integer id, Professor professorUpdate) {
+    public ProfessorReturn update(Integer id, Professor professorUpdate) {
         Professor professor = professorRepository.getOne(id);
         professor.update(professorUpdate);
-        return professorRepository.save(professor);
+        return ProfessorReturn.parse(professorRepository.save(professor));
     }
 
     @Override

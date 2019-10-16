@@ -1,6 +1,6 @@
 package br.com.unifacef.escola.business;
 
-import br.com.unifacef.escola.contract.returnJson.MateriaReturn;
+import br.com.unifacef.escola.contract.returnJson.materia.MateriaReturn;
 import br.com.unifacef.escola.model.Materia;
 
 import java.util.List;

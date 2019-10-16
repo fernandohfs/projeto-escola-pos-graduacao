@@ -1,7 +1,7 @@
 package br.com.unifacef.escola.business.Impl;
 
 import br.com.unifacef.escola.business.MateriaBusiness;
-import br.com.unifacef.escola.contract.returnJson.MateriaReturn;
+import br.com.unifacef.escola.contract.returnJson.materia.MateriaReturn;
 import br.com.unifacef.escola.model.Materia;
 import br.com.unifacef.escola.repository.MateriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;

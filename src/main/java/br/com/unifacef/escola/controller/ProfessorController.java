@@ -1,6 +1,7 @@
 package br.com.unifacef.escola.controller;
 
 import br.com.unifacef.escola.business.Impl.ProfessorBusinessImpl;
+import br.com.unifacef.escola.contract.returnJson.professor.ProfessorReturn;
 import br.com.unifacef.escola.model.Professor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -18,25 +19,24 @@ public class ProfessorController {
     private ProfessorBusinessImpl professorBusiness;
 
     @GetMapping
-    public ResponseEntity<List<Professor>> findAll() {
+    public ResponseEntity<List<ProfessorReturn>> findAll() {
         return ResponseEntity.ok(professorBusiness.find());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Professor> findById(@PathVariable Integer id) {
-        Professor professor = professorBusiness.findBy(id);
-        return ResponseEntity.ok(professor);
+    public ResponseEntity<ProfessorReturn> findById(@PathVariable Integer id) {
+        return ResponseEntity.ok(professorBusiness.findBy(id));
     }
 
     @PostMapping
-    public ResponseEntity<Professor> create(@RequestBody Professor professor) {
+    public ResponseEntity<ProfessorReturn> create(@RequestBody Professor professor) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(professorBusiness.create(professor));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Professor> update(
+    public ResponseEntity<ProfessorReturn> update(
             @RequestBody Professor professor, @PathVariable Integer id) {
         return ResponseEntity.ok(professorBusiness.update(id, professor));
     }

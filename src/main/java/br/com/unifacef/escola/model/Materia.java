@@ -1,6 +1,5 @@
 package br.com.unifacef.escola.model;
 
-import br.com.unifacef.escola.contract.returnJson.MateriaReturn;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -12,9 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
@@ -44,6 +41,7 @@ public class Materia implements Serializable {
     public void update(Materia materiaUpdate) {
         setTitulo(materiaUpdate.getTitulo());
         setDescricao(materiaUpdate.getDescricao());
+        setProfessor(materiaUpdate.getProfessor());
         setSituacao(materiaUpdate.getSituacao());
     }
 

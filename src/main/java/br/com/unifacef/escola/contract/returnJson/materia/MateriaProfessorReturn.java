@@ -1,4 +1,4 @@
-package br.com.unifacef.escola.contract.returnJson;
+package br.com.unifacef.escola.contract.returnJson.materia;
 
 import br.com.unifacef.escola.model.Professor;
 
