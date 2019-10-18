@@ -1,6 +1,5 @@
 package br.com.unifacef.escola.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +33,7 @@ public class Professor implements Serializable {
     private String cpf;
     private Date dataAdmissao;
     private Date dataDemissao;
-    @OneToMany(mappedBy = "professor", targetEntity = Materia.class, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "professor", targetEntity = Materia.class,  fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Materia> materias = new ArrayList<>();
     @CreationTimestamp

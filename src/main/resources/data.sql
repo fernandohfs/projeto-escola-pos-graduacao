@@ -41,7 +41,7 @@ CREATE TABLE materia (
   data_criacao DATETIME NULL,
   data_atualizacao DATETIME NULL,
   PRIMARY KEY(id),
-  FOREIGN KEY(professor_id) REFERENCES professor(id)
+  FOREIGN KEY(professor_id) REFERENCES professor(id) ON DELETE SET NULL
 );
 
 CREATE TABLE turma (

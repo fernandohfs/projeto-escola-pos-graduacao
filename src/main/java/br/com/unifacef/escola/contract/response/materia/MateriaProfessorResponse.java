@@ -1,13 +1,13 @@
-package br.com.unifacef.escola.contract.returnJson.materia;
+package br.com.unifacef.escola.contract.response.materia;
 
 import br.com.unifacef.escola.model.Professor;
 
-public class MateriaProfessorReturn {
+public class MateriaProfessorResponse {
 
     private Integer id;
     private String Nome;
 
-    public MateriaProfessorReturn(Integer id, String nome) {
+    public MateriaProfessorResponse(Integer id, String nome) {
         this.id = id;
         Nome = nome;
     }
@@ -20,9 +20,9 @@ public class MateriaProfessorReturn {
         return Nome;
     }
 
-    public static MateriaProfessorReturn parser(Professor professor) {
+    public static MateriaProfessorResponse parser(Professor professor) {
         if (professor != null) {
-            return new MateriaProfessorReturn(
+            return new MateriaProfessorResponse(
                     professor.getId(),
                     professor.getNome()
             );

@@ -1,5 +1,6 @@
-package br.com.unifacef.escola.contract.returnJson.professor;
+package br.com.unifacef.escola.contract.response.professor;
 
+import br.com.unifacef.escola.model.Materia;
 import br.com.unifacef.escola.model.Professor;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfessorReturn {
+public class ProfessorResponse {
 
     private Integer id;
     private String nome;
@@ -22,8 +23,8 @@ public class ProfessorReturn {
     private Date dataAdmissao;
     private Date dataDemissao;
 
-    public static ProfessorReturn parse(Professor professor) {
-        return new ProfessorReturn(
+    public static ProfessorResponse parse(Professor professor) {
+        return new ProfessorResponse(
                 professor.getId(),
                 professor.getNome(),
                 professor.getEmail(),
@@ -34,10 +35,12 @@ public class ProfessorReturn {
         );
     }
 
-    public static List<ProfessorReturn> parse(List<Professor> professores) {
-        List<ProfessorReturn> professoresJson = new ArrayList<>();
-        professores.forEach(materia -> professoresJson.add(ProfessorReturn.parse(materia)));
-        return professoresJson;
+    public static List<ProfessorResponse> parse(List<Professor> professores) {
+        List<ProfessorResponse> professoresResponse = new ArrayList<>();
+        professores.forEach(professor -> {
+            professoresResponse.add(ProfessorResponse.parse(professor));
+        });
+        return professoresResponse;
     }
 
 }
