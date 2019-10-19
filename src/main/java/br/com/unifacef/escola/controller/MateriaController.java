@@ -2,9 +2,12 @@ package br.com.unifacef.escola.controller;
 
 import br.com.unifacef.escola.business.MateriaBusiness;
 import br.com.unifacef.escola.contract.response.materia.MateriaResponse;
+import br.com.unifacef.escola.contract.response.materia.MateriaResponseList;
 import br.com.unifacef.escola.contract.validation.materia.MateriaValidation;
 import br.com.unifacef.escola.model.Materia;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +23,9 @@ public class MateriaController {
     private MateriaBusiness materiaBusiness;
 
     @GetMapping
-    public ResponseEntity<List<MateriaResponse>> find() {
-        return ResponseEntity.ok(materiaBusiness.find());
+    public ResponseEntity<MateriaResponseList> find(
+            @PageableDefault(sort="id", page=0, size=10) Pageable pageable) {
+        return ResponseEntity.ok(MateriaResponseList.parse(materiaBusiness.find(pageable)));
     }
 
     @GetMapping("/{id}")

@@ -6,9 +6,7 @@ import br.com.unifacef.escola.contract.response.professor.ProfessorResponse;
 import br.com.unifacef.escola.contract.response.professor.ProfessorResponseList;
 import br.com.unifacef.escola.contract.validation.professor.ProfessorMateriaValidation;
 import br.com.unifacef.escola.contract.validation.professor.ProfessorValidation;
-import br.com.unifacef.escola.model.Professor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -52,9 +50,8 @@ public class ProfessorController {
 
     @PostMapping("/{id}/materias")
     public ResponseEntity<?> createAttachMaterias(@PathVariable Integer id, @RequestBody List<@Valid ProfessorMateriaValidation> materias) {
-        return ResponseEntity.ok().build();
-        /*return ResponseEntity
-                .ok(ProfessorMateriaResponse.parse(professorBusiness.attachMateria(id, materias)));*/
+        return ResponseEntity
+                .ok(ProfessorMateriaResponse.parse(professorBusiness.attachMateria(id, materias)));
     }
 
     @PostMapping("/{idProfessor}/materias/{idMateria}")

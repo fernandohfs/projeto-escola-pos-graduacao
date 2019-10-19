@@ -19,7 +19,7 @@ public class ProfessorResponseList {
     private MetaResponse meta;
     private List<ProfessorResponse> content;
 
-    public static  ProfessorResponseList parse(Page<Professor> pageProfessor) {
+    public static ProfessorResponseList parse(Page<Professor> pageProfessor) {
         MetaResponse meta = new MetaResponse(pageProfessor.getTotalElements(), pageProfessor.getTotalPages(), pageProfessor.getSize());
         List<ProfessorResponse> professores = ProfessorResponse.parse(pageProfessor.getContent());
         return new ProfessorResponseList(meta, professores);
