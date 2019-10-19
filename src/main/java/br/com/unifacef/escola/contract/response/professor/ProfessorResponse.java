@@ -2,6 +2,7 @@ package br.com.unifacef.escola.contract.response.professor;
 
 import br.com.unifacef.escola.model.Materia;
 import br.com.unifacef.escola.model.Professor;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -18,9 +19,12 @@ public class ProfessorResponse {
     private Integer id;
     private String nome;
     private String email;
-    private LocalDate dataNascimento;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date dataNascimento;
     private String cpf;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dataAdmissao;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dataDemissao;
 
     public static ProfessorResponse parse(Professor professor) {

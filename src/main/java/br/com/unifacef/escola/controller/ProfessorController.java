@@ -3,13 +3,14 @@ package br.com.unifacef.escola.controller;
 import br.com.unifacef.escola.business.ProfessorBusiness;
 import br.com.unifacef.escola.contract.response.professor.ProfessorMateriaResponse;
 import br.com.unifacef.escola.contract.response.professor.ProfessorResponse;
-import br.com.unifacef.escola.contract.validation.ProfessorMateriaValidation;
-import br.com.unifacef.escola.contract.validation.ProfessorValidation;
+import br.com.unifacef.escola.contract.validation.professor.ProfessorMateriaValidation;
+import br.com.unifacef.escola.contract.validation.professor.ProfessorValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -35,14 +36,14 @@ public class ProfessorController {
     }
 
     @PostMapping
-    public ResponseEntity<ProfessorResponse> create(@RequestBody ProfessorValidation professor) {
+    public ResponseEntity<ProfessorResponse> create(@RequestBody @Valid ProfessorValidation professor) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ProfessorResponse.parse(professorBusiness.create(professor.converter())));
     }
 
     @PostMapping("/{id}/materias")
-    public ResponseEntity<List<ProfessorMateriaResponse>> createAttachMaterias(@PathVariable Integer id, @RequestBody List<ProfessorMateriaValidation> materias) {
+    public ResponseEntity<List<ProfessorMateriaResponse>> createAttachMaterias(@PathVariable Integer id, @RequestBody List<@Valid ProfessorMateriaValidation> materias) {
         return ResponseEntity
                 .ok(ProfessorMateriaResponse.parse(professorBusiness.attachMateria(id, materias)));
     }
@@ -55,12 +56,12 @@ public class ProfessorController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ProfessorResponse> update(
-            @RequestBody ProfessorValidation professor, @PathVariable Integer id) {
+            @RequestBody @Valid ProfessorValidation professor, @PathVariable Integer id) {
         return ResponseEntity.ok(ProfessorResponse.parse(professorBusiness.update(id, professor.converter())));
     }
 
     @PutMapping("/{id}/materias")
-    public ResponseEntity<List<ProfessorMateriaResponse>> updateSyncMaterias(@PathVariable Integer id, @RequestBody List<ProfessorMateriaValidation> materias) {
+    public ResponseEntity<List<ProfessorMateriaResponse>> updateSyncMaterias(@PathVariable Integer id, @RequestBody @Valid List<ProfessorMateriaValidation> materias) {
         return ResponseEntity
                 .ok(ProfessorMateriaResponse.parse(professorBusiness.syncMaterias(id, materias)));
     }
@@ -72,7 +73,7 @@ public class ProfessorController {
     }
 
     @DeleteMapping("/{id}/materias")
-    public ResponseEntity<?> detachAllMateria(@PathVariable Integer id, @RequestBody List<ProfessorMateriaValidation> materias) {
+    public ResponseEntity<?> detachAllMateria(@PathVariable Integer id, @RequestBody @Valid List<ProfessorMateriaValidation> materias) {
         professorBusiness.detach(materias);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

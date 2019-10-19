@@ -1,6 +1,6 @@
 package br.com.unifacef.escola.business;
 
-import br.com.unifacef.escola.contract.validation.ProfessorMateriaValidation;
+import br.com.unifacef.escola.contract.validation.professor.ProfessorMateriaValidation;
 import br.com.unifacef.escola.model.Materia;
 import br.com.unifacef.escola.model.Professor;
 

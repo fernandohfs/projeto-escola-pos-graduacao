@@ -29,7 +29,7 @@ public class Professor implements Serializable {
     private Integer id;
     private String nome;
     private String email;
-    private LocalDate dataNascimento;
+    private Date dataNascimento;
     private String cpf;
     private Date dataAdmissao;
     private Date dataDemissao;

@@ -2,15 +2,13 @@ package br.com.unifacef.escola.business.Impl;
 
 import br.com.unifacef.escola.business.MateriaBusiness;
 import br.com.unifacef.escola.business.ProfessorBusiness;
-import br.com.unifacef.escola.contract.response.professor.ProfessorResponse;
-import br.com.unifacef.escola.contract.validation.ProfessorMateriaValidation;
+import br.com.unifacef.escola.contract.validation.professor.ProfessorMateriaValidation;
 import br.com.unifacef.escola.model.Materia;
 import br.com.unifacef.escola.model.Professor;
 import br.com.unifacef.escola.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
