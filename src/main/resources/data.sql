@@ -34,7 +34,7 @@ CREATE TABLE aluno (
 
 CREATE TABLE materia (
   id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  professor_id INTEGER UNSIGNED NOT NULL,
+  professor_id INTEGER UNSIGNED,
   titulo VARCHAR(100) NULL,
   descricao VARCHAR(100) NULL,
   situacao CHAR(1) NULL,
@@ -46,7 +46,6 @@ CREATE TABLE materia (
 
 CREATE TABLE turma (
   id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  aluno_id INTEGER UNSIGNED NOT NULL,
   curso_id INTEGER UNSIGNED NOT NULL,
   data_periodo_inicio DATE NULL,
   data_periodo_fim DATE NULL,
@@ -57,6 +56,14 @@ CREATE TABLE turma (
   PRIMARY KEY(id),
   FOREIGN KEY(aluno_id) REFERENCES aluno(id),
   FOREIGN KEY(curso_id) REFERENCES curso(id)
+);
+
+CREATE TABLE aluno_turma (
+  aluno_id INTEGER UNSIGNED NOT NULL,
+  turma_id INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY(aluno_id, turma_id),
+  FOREIGN KEY(aluno_id) REFERENCES aluno(id),
+  FOREIGN KEY(turma_id) REFERENCES turma(id)
 );
 
 CREATE TABLE materia_curso (

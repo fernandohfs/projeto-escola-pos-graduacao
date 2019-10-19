@@ -3,16 +3,23 @@ package br.com.unifacef.escola.controller;
 import br.com.unifacef.escola.business.ProfessorBusiness;
 import br.com.unifacef.escola.contract.response.professor.ProfessorMateriaResponse;
 import br.com.unifacef.escola.contract.response.professor.ProfessorResponse;
+import br.com.unifacef.escola.contract.response.professor.ProfessorResponseList;
 import br.com.unifacef.escola.contract.validation.professor.ProfessorMateriaValidation;
 import br.com.unifacef.escola.contract.validation.professor.ProfessorValidation;
+import br.com.unifacef.escola.model.Professor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/v1/professores")
 public class ProfessorController {
@@ -21,8 +28,9 @@ public class ProfessorController {
     private ProfessorBusiness professorBusiness;
 
     @GetMapping
-    public ResponseEntity<List<ProfessorResponse>> findAll() {
-        return ResponseEntity.ok(ProfessorResponse.parse(professorBusiness.find()));
+    public ResponseEntity<ProfessorResponseList> findAll(
+            @PageableDefault(sort="id", page=0, size=10) Pageable pageable) {
+        return ResponseEntity.ok(ProfessorResponseList.parse(professorBusiness.find(pageable)));
     }
 
     @GetMapping("/{id}")
@@ -43,9 +51,10 @@ public class ProfessorController {
     }
 
     @PostMapping("/{id}/materias")
-    public ResponseEntity<List<ProfessorMateriaResponse>> createAttachMaterias(@PathVariable Integer id, @RequestBody List<@Valid ProfessorMateriaValidation> materias) {
-        return ResponseEntity
-                .ok(ProfessorMateriaResponse.parse(professorBusiness.attachMateria(id, materias)));
+    public ResponseEntity<?> createAttachMaterias(@PathVariable Integer id, @RequestBody List<@Valid ProfessorMateriaValidation> materias) {
+        return ResponseEntity.ok().build();
+        /*return ResponseEntity
+                .ok(ProfessorMateriaResponse.parse(professorBusiness.attachMateria(id, materias)));*/
     }
 
     @PostMapping("/{idProfessor}/materias/{idMateria}")

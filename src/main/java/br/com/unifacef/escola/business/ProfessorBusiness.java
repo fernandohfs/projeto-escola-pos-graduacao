@@ -4,11 +4,13 @@ import br.com.unifacef.escola.contract.validation.professor.ProfessorMateriaVali
 import br.com.unifacef.escola.model.Materia;
 import br.com.unifacef.escola.model.Professor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface ProfessorBusiness {
 
-    public List<Professor> find();
+    public Page<Professor> find(Pageable pageable);
     public Professor findBy(Integer id);
     public Professor create(Professor professor);
     public Professor update(Integer id, Professor professor);
