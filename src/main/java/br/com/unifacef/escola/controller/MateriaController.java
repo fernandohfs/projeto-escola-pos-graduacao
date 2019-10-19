@@ -4,7 +4,6 @@ import br.com.unifacef.escola.business.MateriaBusiness;
 import br.com.unifacef.escola.contract.response.materia.MateriaResponse;
 import br.com.unifacef.escola.contract.response.materia.MateriaResponseList;
 import br.com.unifacef.escola.contract.validation.materia.MateriaValidation;
-import br.com.unifacef.escola.model.Materia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -13,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/materias")

@@ -1,6 +1,5 @@
 package br.com.unifacef.escola.contract.response.materia;
 
-import br.com.unifacef.escola.config.exception.general.Response;
 import br.com.unifacef.escola.contract.response.general.MetaResponse;
 import br.com.unifacef.escola.model.Materia;
 import lombok.AllArgsConstructor;

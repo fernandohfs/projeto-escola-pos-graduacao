@@ -1,14 +1,13 @@
 package br.com.unifacef.escola.business.Impl;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import br.com.unifacef.escola.business.CursoBusiness;
 import br.com.unifacef.escola.model.Curso;
 import br.com.unifacef.escola.repository.CursoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CursoBusinessImpl implements CursoBusiness {

@@ -1,9 +1,9 @@
 package br.com.unifacef.escola.business;
 
+import br.com.unifacef.escola.model.Curso;
+
 import java.util.List;
 import java.util.Optional;
-
-import br.com.unifacef.escola.model.Curso;
 
 public interface CursoBusiness {
   

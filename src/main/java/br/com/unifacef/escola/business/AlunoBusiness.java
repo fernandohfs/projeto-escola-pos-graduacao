@@ -1,14 +1,13 @@
 package br.com.unifacef.escola.business;
 
 import br.com.unifacef.escola.model.Aluno;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface AlunoBusiness {
 
-    List<Aluno> find();
-    Optional<Aluno> findBy(Integer id);
+    Page<Aluno> find(Pageable pageable);
+    Aluno findBy(Integer id);
     Aluno create(Aluno aluno);
     Aluno update(Integer id, Aluno aluno);
     void delete(Integer id);

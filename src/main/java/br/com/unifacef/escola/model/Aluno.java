@@ -1,21 +1,19 @@
 package br.com.unifacef.escola.model;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -36,5 +34,12 @@ public class Aluno implements Serializable {
     private LocalDateTime dataCriacao;
     @UpdateTimestamp
     private LocalDateTime dataAtualizacao;
+
+    public void update(Aluno alunoUpdate) {
+        setNome(alunoUpdate.getNome());
+        setEmail(alunoUpdate.getEmail());
+        setDataNascimento(alunoUpdate.getDataNascimento());
+        setCpf(alunoUpdate.getCpf());
+    }
 
 }

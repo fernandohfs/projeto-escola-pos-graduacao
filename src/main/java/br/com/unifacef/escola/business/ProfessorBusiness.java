@@ -3,9 +3,9 @@ package br.com.unifacef.escola.business;
 import br.com.unifacef.escola.contract.validation.professor.ProfessorMateriaValidation;
 import br.com.unifacef.escola.model.Materia;
 import br.com.unifacef.escola.model.Professor;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface ProfessorBusiness {
