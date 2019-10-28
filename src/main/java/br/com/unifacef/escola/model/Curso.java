@@ -27,9 +27,15 @@ public class Curso implements Serializable {
   private Integer id;
   private String titulo;
   private String descricao;
-  private String situacao;
+  private Character situacao;
   @CreationTimestamp
   private LocalDateTime dataCriacao;
   @UpdateTimestamp
   private LocalDateTime dataAtualizacao;
+
+  public void update(Curso cursoUpdate) {
+    setTitulo(cursoUpdate.getTitulo());
+    setDescricao(cursoUpdate.getDescricao());
+    setSituacao(cursoUpdate.getSituacao());
+  }
 }

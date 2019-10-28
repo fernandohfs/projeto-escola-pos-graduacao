@@ -4,9 +4,10 @@ import br.com.unifacef.escola.business.CursoBusiness;
 import br.com.unifacef.escola.model.Curso;
 import br.com.unifacef.escola.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,13 +17,13 @@ public class CursoBusinessImpl implements CursoBusiness {
   private CursoRepository cursoRepository;
 
   @Override
-  public List<Curso> find() {
-    return cursoRepository.findAll();
+  public Page<Curso> find(Pageable pageable) {
+    return cursoRepository.findAll(pageable);
   }
 
   @Override
-  public Optional<Curso> findBy(Integer id) {
-    return cursoRepository.findById(id);
+  public Curso findBy(Integer id) {
+    return cursoRepository.getOne(id);
   }
 
   @Override
@@ -32,22 +33,14 @@ public class CursoBusinessImpl implements CursoBusiness {
 
   @Override
   public Curso update(Integer id, Curso cursoUpdate) {
-    Optional<Curso> optionalCurso = cursoRepository.findById(id);
-    Curso curso = optionalCurso.get();
-
-    curso.setTitulo(cursoUpdate.getTitulo());
-    curso.setDescricao(cursoUpdate.getDescricao());
-    curso.setSituacao(cursoUpdate.getSituacao());
-
+    Curso curso = cursoRepository.getOne(id);
+    curso.update(cursoUpdate);
     return cursoRepository.save(curso);
   }
 
   @Override
   public void delete(Integer id) {
-    Optional<Curso> optionalCurso = cursoRepository.findById(id);
-    Curso curso = optionalCurso.get();
-
-    cursoRepository.delete(curso);
+    cursoRepository.deleteById(id);
   }
 
 }
