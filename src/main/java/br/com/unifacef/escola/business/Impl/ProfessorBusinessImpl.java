@@ -2,7 +2,7 @@ package br.com.unifacef.escola.business.Impl;
 
 import br.com.unifacef.escola.business.MateriaBusiness;
 import br.com.unifacef.escola.business.ProfessorBusiness;
-import br.com.unifacef.escola.contract.validation.professor.ProfessorMateriaValidation;
+import br.com.unifacef.escola.contract.validation.materia.MateriaFlexibleValidation;
 import br.com.unifacef.escola.model.Materia;
 import br.com.unifacef.escola.model.Professor;
 import br.com.unifacef.escola.repository.ProfessorRepository;
@@ -51,7 +51,7 @@ public class ProfessorBusinessImpl implements ProfessorBusiness {
     }
 
     @Override
-    public List<Materia> attachMateria(Integer id, List<ProfessorMateriaValidation> professorMaterias) {
+    public List<Materia> attachMateria(Integer id, List<MateriaFlexibleValidation> professorMaterias) {
         List<Materia> materias =  new ArrayList<>();
         Professor professor = findBy(id);
 
@@ -69,8 +69,8 @@ public class ProfessorBusinessImpl implements ProfessorBusiness {
     }
 
     @Override
-    public List<Materia> syncMaterias(Integer id, List<ProfessorMateriaValidation> professorMaterias) {
-        List<Materia> materias = ProfessorMateriaValidation.converterList(professorMaterias);
+    public List<Materia> syncMaterias(Integer id, List<MateriaFlexibleValidation> professorMaterias) {
+        List<Materia> materias = MateriaFlexibleValidation.converterList(professorMaterias);
         Professor professor = findBy(id);
         return materiaBusiness.sync(materias, professor);
     }
@@ -81,7 +81,7 @@ public class ProfessorBusinessImpl implements ProfessorBusiness {
     }
 
     @Override
-    public void detach(List<ProfessorMateriaValidation> materias) {
+    public void detach(List<MateriaFlexibleValidation> materias) {
         materias.forEach(materia -> {
             detach(materia.getId());
         });

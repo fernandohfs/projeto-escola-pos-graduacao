@@ -12,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -32,6 +33,13 @@ public class Materia implements Serializable {
     @JoinColumn(name = "professor_id")
     @JsonBackReference
     private Professor professor;
+    @ManyToMany
+    @JoinTable(
+            name = "materia_curso",
+            joinColumns = @JoinColumn(name = "materia_id"),
+            inverseJoinColumns = @JoinColumn(name = "curso_id"))
+    @JsonBackReference
+    private List<Curso> cursos;
     private char situacao;
     @CreationTimestamp
     private Date dataCriacao;

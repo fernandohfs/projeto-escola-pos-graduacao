@@ -4,7 +4,9 @@ import br.com.unifacef.escola.business.MateriaBusiness;
 import br.com.unifacef.escola.contract.response.materia.MateriaResponse;
 import br.com.unifacef.escola.contract.response.materia.MateriaResponseList;
 import br.com.unifacef.escola.contract.validation.materia.MateriaValidation;
+import br.com.unifacef.escola.model.Materia;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -20,28 +22,35 @@ public class MateriaController {
     @Autowired
     private MateriaBusiness materiaBusiness;
 
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity<MateriaResponseList> find(
             @PageableDefault(sort="id", page=0, size=10) Pageable pageable) {
         return ResponseEntity.ok(MateriaResponseList.parse(materiaBusiness.find(pageable)));
+    }*/
+
+    @GetMapping
+    public ResponseEntity<Page<Materia>> find(
+            @PageableDefault(sort="id", page=0, size=10) Pageable pageable) {
+        return ResponseEntity.ok(materiaBusiness.find(pageable));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MateriaResponse> findBy(@PathVariable Integer id) {
-        return ResponseEntity.ok(materiaBusiness.findById(id));
+        return ResponseEntity.ok(MateriaResponse.parse(materiaBusiness.findById(id)));
     }
 
     @PostMapping
     public ResponseEntity<MateriaResponse> create(@RequestBody @Valid MateriaValidation materia) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(materiaBusiness.create(materia.converter()));
+                .body(MateriaResponse.parse(materiaBusiness.create(materia.converter())));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<MateriaResponse> update(
             @RequestBody @Valid MateriaValidation materia, @PathVariable Integer id) {
-        return ResponseEntity.ok(materiaBusiness.update(id, materia.converter()));
+        return ResponseEntity.ok(
+                MateriaResponse.parse(materiaBusiness.update(id, materia.converter())));
     }
 
     @DeleteMapping("/{id}")

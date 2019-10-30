@@ -2,6 +2,7 @@ package br.com.unifacef.escola.business.Impl;
 
 import br.com.unifacef.escola.business.MateriaBusiness;
 import br.com.unifacef.escola.contract.response.materia.MateriaResponse;
+import br.com.unifacef.escola.model.Curso;
 import br.com.unifacef.escola.model.Materia;
 import br.com.unifacef.escola.model.Professor;
 import br.com.unifacef.escola.repository.MateriaRepository;
@@ -24,20 +25,20 @@ public class MateriaBusinessImpl implements MateriaBusiness {
     }
 
     @Override
-    public MateriaResponse findById(Integer id) {
-        return MateriaResponse.parse(materiaRepository.getOne(id));
+    public Materia findById(Integer id) {
+        return materiaRepository.getOne(id);
     }
 
     @Override
-    public MateriaResponse create(Materia materia) {
-        return MateriaResponse.parse(materiaRepository.save(materia));
+    public Materia create(Materia materia) {
+        return materiaRepository.save(materia);
     }
 
     @Override
-    public MateriaResponse update(Integer id, Materia materiaUpdate) {
+    public Materia update(Integer id, Materia materiaUpdate) {
         Materia materia = materiaRepository.getOne(id);
         materia.update(materiaUpdate);
-        return MateriaResponse.parse(materiaRepository.save(materia));
+        return materiaRepository.save(materia);
     }
 
     @Override

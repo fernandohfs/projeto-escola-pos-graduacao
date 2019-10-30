@@ -1,10 +1,10 @@
 package br.com.unifacef.escola.controller;
 
 import br.com.unifacef.escola.business.ProfessorBusiness;
-import br.com.unifacef.escola.contract.response.professor.ProfessorMateriaResponse;
+import br.com.unifacef.escola.contract.response.materia.SimpleMateriaResponse;
 import br.com.unifacef.escola.contract.response.professor.ProfessorResponse;
 import br.com.unifacef.escola.contract.response.professor.ProfessorResponseList;
-import br.com.unifacef.escola.contract.validation.professor.ProfessorMateriaValidation;
+import br.com.unifacef.escola.contract.validation.materia.MateriaFlexibleValidation;
 import br.com.unifacef.escola.contract.validation.professor.ProfessorValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -37,8 +37,8 @@ public class ProfessorController {
     }
 
     @GetMapping("/{id}/materias")
-    public ResponseEntity<List<ProfessorMateriaResponse>> findByIdWithMaterias(@PathVariable Integer id) {
-        return ResponseEntity.ok(ProfessorMateriaResponse.parse(professorBusiness.findBy(id).getMaterias()));
+    public ResponseEntity<List<SimpleMateriaResponse>> findByIdWithMaterias(@PathVariable Integer id) {
+        return ResponseEntity.ok(SimpleMateriaResponse.parse(professorBusiness.findBy(id).getMaterias()));
     }
 
     @PostMapping
@@ -49,15 +49,15 @@ public class ProfessorController {
     }
 
     @PostMapping("/{id}/materias")
-    public ResponseEntity<?> createAttachMaterias(@PathVariable Integer id, @RequestBody List<@Valid ProfessorMateriaValidation> materias) {
+    public ResponseEntity<?> createAttachMaterias(@PathVariable Integer id, @RequestBody List<@Valid MateriaFlexibleValidation> materias) {
         return ResponseEntity
-                .ok(ProfessorMateriaResponse.parse(professorBusiness.attachMateria(id, materias)));
+                .ok(SimpleMateriaResponse.parse(professorBusiness.attachMateria(id, materias)));
     }
 
     @PostMapping("/{idProfessor}/materias/{idMateria}")
-    public ResponseEntity<ProfessorMateriaResponse> createAttachMaterias(@PathVariable Integer idProfessor, @PathVariable Integer idMateria) {
+    public ResponseEntity<SimpleMateriaResponse> createAttachMaterias(@PathVariable Integer idProfessor, @PathVariable Integer idMateria) {
         return ResponseEntity
-                .ok(ProfessorMateriaResponse.parse(professorBusiness.attachMateria(idProfessor, idMateria)));
+                .ok(SimpleMateriaResponse.parse(professorBusiness.attachMateria(idProfessor, idMateria)));
     }
 
     @PutMapping("/{id}")
@@ -67,9 +67,15 @@ public class ProfessorController {
     }
 
     @PutMapping("/{id}/materias")
-    public ResponseEntity<List<ProfessorMateriaResponse>> updateSyncMaterias(@PathVariable Integer id, @RequestBody @Valid List<ProfessorMateriaValidation> materias) {
+    public ResponseEntity<List<SimpleMateriaResponse>> updateSyncMaterias(@PathVariable Integer id, @RequestBody @Valid List<MateriaFlexibleValidation> materias) {
         return ResponseEntity
-                .ok(ProfessorMateriaResponse.parse(professorBusiness.syncMaterias(id, materias)));
+                .ok(SimpleMateriaResponse.parse(professorBusiness.syncMaterias(id, materias)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
+        professorBusiness.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping("/{idProfessor}/materias/{idMateria}")
@@ -79,14 +85,8 @@ public class ProfessorController {
     }
 
     @DeleteMapping("/{id}/materias")
-    public ResponseEntity<?> detachAllMateria(@PathVariable Integer id, @RequestBody @Valid List<ProfessorMateriaValidation> materias) {
+    public ResponseEntity<?> detachAllMateria(@PathVariable Integer id, @RequestBody @Valid List<MateriaFlexibleValidation> materias) {
         professorBusiness.detach(materias);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Integer id) {
-        professorBusiness.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

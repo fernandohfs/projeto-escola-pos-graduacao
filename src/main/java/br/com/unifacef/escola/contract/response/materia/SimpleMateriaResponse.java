@@ -1,4 +1,4 @@
-package br.com.unifacef.escola.contract.response.professor;
+package br.com.unifacef.escola.contract.response.materia;
 
 import br.com.unifacef.escola.model.Materia;
 import lombok.AllArgsConstructor;
@@ -13,15 +13,15 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfessorMateriaResponse {
+public class SimpleMateriaResponse {
 
     private Integer id;
     private String titulo;
     private String descricao;
     private char situacao;
 
-    public static ProfessorMateriaResponse parse(Materia materia) {
-        return new ProfessorMateriaResponse(
+    public static SimpleMateriaResponse parse(Materia materia) {
+        return new SimpleMateriaResponse(
                 materia.getId(),
                 materia.getTitulo(),
                 materia.getDescricao(),
@@ -29,9 +29,9 @@ public class ProfessorMateriaResponse {
         );
     }
 
-    public static List<ProfessorMateriaResponse> parse(List<Materia> materias) {
-        List<ProfessorMateriaResponse> materiasResponse = new ArrayList<>();
-        materias.forEach(materia -> materiasResponse.add(ProfessorMateriaResponse.parse(materia)));
+    public static List<SimpleMateriaResponse> parse(List<Materia> materias) {
+        List<SimpleMateriaResponse> materiasResponse = new ArrayList<>();
+        materias.forEach(materia -> materiasResponse.add(SimpleMateriaResponse.parse(materia)));
         return materiasResponse;
     }
 

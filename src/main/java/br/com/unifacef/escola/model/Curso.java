@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -27,6 +25,12 @@ public class Curso implements Serializable {
   private Integer id;
   private String titulo;
   private String descricao;
+  @ManyToMany
+  @JoinTable(
+          name = "materia_curso",
+          joinColumns = @JoinColumn(name = "curso_id"),
+          inverseJoinColumns = @JoinColumn(name = "materia_id"))
+  private List<Materia> materias;
   private Character situacao;
   @CreationTimestamp
   private LocalDateTime dataCriacao;

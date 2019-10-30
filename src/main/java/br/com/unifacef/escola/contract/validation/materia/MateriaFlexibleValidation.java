@@ -1,4 +1,4 @@
-package br.com.unifacef.escola.contract.validation.professor;
+package br.com.unifacef.escola.contract.validation.materia;
 
 import br.com.unifacef.escola.model.Materia;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfessorMateriaValidation {
+public class MateriaFlexibleValidation {
 
     @NotNull
     private Integer id;
@@ -33,7 +33,7 @@ public class ProfessorMateriaValidation {
         return materia;
     }
 
-    public static List<Materia> converterList(List<ProfessorMateriaValidation> professorMaterias) {
+    public static List<Materia> converterList(List<MateriaFlexibleValidation> professorMaterias) {
         List<Materia> materias = new ArrayList<>();
         professorMaterias.forEach(materia -> {
             materias.add(materia.converter());
