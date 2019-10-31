@@ -54,7 +54,7 @@ public class CursoController {
     }
 
     @PostMapping("/{idProfessor}/materias/{idMateria}")
-    public ResponseEntity<?> createAttachMaterias(@PathVariable Integer idProfessor, @PathVariable Integer idMateria) {
+    public ResponseEntity<?> createAttachMateria(@PathVariable Integer idProfessor, @PathVariable Integer idMateria) {
         return ResponseEntity
                 .ok(SimpleMateriaResponse.parse(cursoBusiness.attachMateria(idProfessor, idMateria)));
     }
