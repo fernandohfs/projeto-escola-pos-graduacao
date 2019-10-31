@@ -3,12 +3,11 @@ package br.com.unifacef.escola.controller;
 import br.com.unifacef.escola.business.CursoBusiness;
 import br.com.unifacef.escola.contract.response.curso.CursoMateriaResponse;
 import br.com.unifacef.escola.contract.response.curso.CursoResponse;
+import br.com.unifacef.escola.contract.response.curso.CursoResponseList;
 import br.com.unifacef.escola.contract.response.materia.SimpleMateriaResponse;
 import br.com.unifacef.escola.contract.validation.curso.CursoValidation;
 import br.com.unifacef.escola.contract.validation.materia.MateriaFlexibleValidation;
-import br.com.unifacef.escola.model.Curso;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -25,16 +24,10 @@ public class CursoController {
     @Autowired
     private CursoBusiness cursoBusiness;
 
-    /*@GetMapping
+    @GetMapping
     public ResponseEntity<CursoResponseList> find(
             @PageableDefault(sort="id", page=0, size=10) Pageable pageable) {
         return ResponseEntity.ok().body(CursoResponseList.parse(cursoBusiness.find(pageable)));
-    }*/
-
-    @GetMapping
-    public ResponseEntity<Page<Curso>> find(
-            @PageableDefault(sort="id", page=0, size=10) Pageable pageable) {
-        return ResponseEntity.ok().body(cursoBusiness.find(pageable));
     }
 
     @GetMapping("/{id}")
@@ -71,9 +64,28 @@ public class CursoController {
         return ResponseEntity.ok().body(CursoResponse.parse(cursoBusiness.update(id, curso.converter())));
     }
 
+    @PutMapping("/{id}/materias")
+    public ResponseEntity<List<SimpleMateriaResponse>> updateSyncMaterias(@PathVariable Integer id, @RequestBody @Valid List<MateriaFlexibleValidation> materias) {
+        return ResponseEntity
+                .ok(SimpleMateriaResponse.parse(cursoBusiness.syncMaterias(id, materias)));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         cursoBusiness.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @DeleteMapping("/{idCurso}/materias/{idMateria}")
+    public ResponseEntity<?> detachMateria(@PathVariable Integer idCurso, @PathVariable Integer idMateria) {
+        cursoBusiness.detach(idCurso, idMateria);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/{id}/materias")
+    public ResponseEntity<?> detachAllMateria(@PathVariable Integer id, @RequestBody @Valid List<MateriaFlexibleValidation> materias) {
+        cursoBusiness.detach(id, materias);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }

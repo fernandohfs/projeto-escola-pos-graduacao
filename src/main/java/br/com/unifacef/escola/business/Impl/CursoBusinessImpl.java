@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CursoBusinessImpl implements CursoBusiness {
@@ -86,23 +87,37 @@ public class CursoBusinessImpl implements CursoBusiness {
   }
 
   @Override
-  public List<Materia> syncMaterias(Integer id, List<MateriaFlexibleValidation> materias) {
-    return null;
+  public List<Materia> syncMaterias(Integer idCurso, List<MateriaFlexibleValidation> materias) {
+    detachAll(idCurso);
+    return attachMateria(idCurso, materias);
   }
 
   @Override
-  public void detach(Integer idMateria) {
-
+  public void detach(Integer idCurso, Integer idMateria) {
+    Curso curso = findBy(idCurso);
+    List<Materia> materias = curso.getMaterias().stream().filter(materia -> materia.getId() != idMateria).collect(Collectors.toList());
+    curso.setMaterias(materias);
+    cursoRepository.save(curso);
   }
 
   @Override
-  public void detach(List<MateriaFlexibleValidation> materias) {
+  public void detach(Integer idCurso, List<MateriaFlexibleValidation> cursoMaterias) {
+    Curso curso = findBy(idCurso);
 
+    cursoMaterias.forEach(materia -> {
+      curso.setMaterias(
+              curso.getMaterias().stream().filter(m -> m.getId() != materia.getId()).collect(Collectors.toList())
+      );
+    });
+
+    cursoRepository.save(curso);
   }
 
   @Override
   public void detachAll(Integer idCurso) {
-
+    Curso curso = findBy(idCurso);
+    curso.setMaterias(new ArrayList<Materia>());
+    cursoRepository.save(curso);
   }
 
 }

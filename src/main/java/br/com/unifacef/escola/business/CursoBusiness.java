@@ -16,11 +16,11 @@ public interface CursoBusiness {
   Curso create(Curso curso);
   Curso update(Integer id, Curso curso);
   void delete(Integer id);
-  public List<Materia> attachMateria(Integer id, List<MateriaFlexibleValidation> cursoMaterias);
+  public List<Materia> attachMateria(Integer idCurso, List<MateriaFlexibleValidation> cursoMaterias);
   public List<Materia> attachMateria(Integer idCurso, Integer idMateria);
-  public List<Materia> syncMaterias(Integer id, List<MateriaFlexibleValidation> cursoMaterias);
-  public void detach(Integer idMateria);
-  public void detach(List<MateriaFlexibleValidation> cursoMaterias);
+  public List<Materia> syncMaterias(Integer idCurso, List<MateriaFlexibleValidation> cursoMaterias);
+  public void detach(Integer idCurso, Integer idMateria);
+  public void detach(Integer idCurso, List<MateriaFlexibleValidation> cursoMaterias);
   public void detachAll(Integer idCurso);
   
 }
