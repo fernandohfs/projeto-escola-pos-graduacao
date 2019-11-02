@@ -2,9 +2,12 @@ package br.com.unifacef.escola.business.Impl;
 
 import br.com.unifacef.escola.business.CursoBusiness;
 import br.com.unifacef.escola.business.MateriaBusiness;
+import br.com.unifacef.escola.business.TurmaBusiness;
 import br.com.unifacef.escola.contract.validation.materia.MateriaFlexibleValidation;
+import br.com.unifacef.escola.contract.validation.turma.TurmaFlexibleValidation;
 import br.com.unifacef.escola.model.Curso;
 import br.com.unifacef.escola.model.Materia;
+import br.com.unifacef.escola.model.Turma;
 import br.com.unifacef.escola.repository.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +26,9 @@ public class CursoBusinessImpl implements CursoBusiness {
 
   @Autowired
   private MateriaBusiness materiaBusiness;
+
+  @Autowired
+  private TurmaBusiness turmaBusiness;
 
   @Override
   public Page<Curso> find(Pageable pageable) {
@@ -84,10 +90,47 @@ public class CursoBusinessImpl implements CursoBusiness {
     cursoRepository.save(curso);
   }
 
+  private void saveAttachTurma(Curso curso, List<TurmaFlexibleValidation> cursoTurmas) {
+    List<Turma> turmas = curso.getTurmas();
+    cursoTurmas.forEach(turma -> {
+      turmas.add(turma.converter());
+    });
+
+    curso.setTurmas(turmas);
+    cursoRepository.save(curso);
+  }
+
+  private void saveAttachTurma(Curso curso,  Turma turma) {
+    List<Turma> turmas = curso.getTurmas();
+    turmas.add(turma);
+
+    curso.setTurmas(turmas);
+    cursoRepository.save(curso);
+  }
+
   @Override
   public List<Materia> syncMaterias(Integer idCurso, List<MateriaFlexibleValidation> materias) {
     detachAll(idCurso);
     return attachMateria(idCurso, materias);
+  }
+
+  @Override
+  public List<Turma> attachTurma(Integer idCurso, List<TurmaFlexibleValidation> cursoTurmas) {
+    Curso curso = findBy(idCurso);
+    saveAttachTurma(curso, cursoTurmas);
+    return curso.getTurmas();
+  }
+
+  @Override
+  public Turma attachTurma(Integer idCurso, Integer idTurma) {
+    Curso curso = findBy(idCurso);
+    return turmaBusiness.attach(idTurma, curso);
+  }
+
+  @Override
+  public List<Turma> syncTurmas(Integer idCurso, List<TurmaFlexibleValidation> cursoTurmas) {
+    detachAll(idCurso);
+    return attachTurma(idCurso, cursoTurmas);
   }
 
   @Override
@@ -116,6 +159,18 @@ public class CursoBusinessImpl implements CursoBusiness {
     Curso curso = findBy(idCurso);
     curso.setMaterias(new ArrayList<Materia>());
     cursoRepository.save(curso);
+  }
+
+  @Override
+  public void detachTurma(Integer idTurma) {
+    turmaBusiness.detach(idTurma);
+  }
+
+  @Override
+  public void detachTurma(List<TurmaFlexibleValidation> turmas) {
+    turmas.forEach(turma -> {
+      detachTurma(turma.getId());
+    });
   }
 
 }
