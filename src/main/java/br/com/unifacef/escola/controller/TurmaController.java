@@ -1,9 +1,12 @@
 package br.com.unifacef.escola.controller;
 
 import br.com.unifacef.escola.business.TurmaBusiness;
+import br.com.unifacef.escola.contract.response.aluno.AlunoResponse;
+import br.com.unifacef.escola.contract.response.curso.CursoResponse;
 import br.com.unifacef.escola.contract.response.materia.MateriaResponse;
 import br.com.unifacef.escola.contract.response.turma.TurmaResponse;
 import br.com.unifacef.escola.contract.response.turma.TurmaResponseList;
+import br.com.unifacef.escola.contract.validation.aluno.AlunoFlexibleValidation;
 import br.com.unifacef.escola.contract.validation.materia.MateriaValidation;
 import br.com.unifacef.escola.contract.validation.turma.TurmaValidation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/turmas")
@@ -28,6 +32,16 @@ public class TurmaController {
         return ResponseEntity.ok(TurmaResponseList.parse(turmaBusiness.find(pageable)));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<TurmaResponse> findBy(@PathVariable Integer id) {
+        return ResponseEntity.ok(TurmaResponse.parse(turmaBusiness.findById(id)));
+    }
+
+    @GetMapping("/{id}/alunos")
+    public ResponseEntity<List<AlunoResponse>> findByIdWithAlunos(@PathVariable Integer id) {
+        return ResponseEntity.ok(AlunoResponse.parse(turmaBusiness.findById(id).getAlunos()));
+    }
+
     @PostMapping
     public ResponseEntity<TurmaResponse> create(@RequestBody @Valid TurmaValidation turma) {
         return ResponseEntity
@@ -35,9 +49,16 @@ public class TurmaController {
                 .body(TurmaResponse.parse(turmaBusiness.create(turma.converter())));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TurmaResponse> findBy(@PathVariable Integer id) {
-        return ResponseEntity.ok(TurmaResponse.parse(turmaBusiness.findById(id)));
+    @PostMapping("/{id}/alunos")
+    public ResponseEntity<?> createAttachAlunos(@PathVariable Integer id, @RequestBody List<@Valid AlunoFlexibleValidation> alunos) {
+        return ResponseEntity
+                .ok(AlunoResponse.parse(turmaBusiness.attachAluno(id, alunos)));
+    }
+
+    @PostMapping("/{idTurma}/alunos/{idAluno}")
+    public ResponseEntity<?> createAttachAluno(@PathVariable Integer idTurma, @PathVariable Integer idAluno) {
+        return ResponseEntity
+                .ok(AlunoResponse.parse(turmaBusiness.attachAluno(idTurma, idAluno)));
     }
 
     @PutMapping("/{id}")
@@ -47,9 +68,27 @@ public class TurmaController {
                 TurmaResponse.parse(turmaBusiness.update(id, turma.converter())));
     }
 
+    @PutMapping("/{id}/alunos")
+    public ResponseEntity<List<AlunoResponse>> updateSyncAlunos(@PathVariable Integer id, @RequestBody @Valid List<AlunoFlexibleValidation> alunos) {
+        return ResponseEntity
+                .ok(AlunoResponse.parse(turmaBusiness.syncAlunos(id, alunos)));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         turmaBusiness.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/{idTurma}/alunos/{idAluno}")
+    public ResponseEntity<?> detachAluno(@PathVariable Integer idTurma, @PathVariable Integer idAluno) {
+        turmaBusiness.detachAluno(idTurma, idAluno);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/{id}/alunos")
+    public ResponseEntity<?> detachAllAlunos(@PathVariable Integer id, @RequestBody @Valid List<AlunoFlexibleValidation> alunos) {
+        turmaBusiness.detachAluno(id, alunos);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
