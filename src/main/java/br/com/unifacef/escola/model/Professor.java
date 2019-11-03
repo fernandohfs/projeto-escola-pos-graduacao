@@ -33,7 +33,7 @@ public class Professor implements Serializable {
     private Date dataAdmissao;
     private Date dataDemissao;
     @OneToMany(mappedBy = "professor", targetEntity = Materia.class,  fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference(value = "materiaReference")
     private List<Materia> materias = new ArrayList<>();
     @CreationTimestamp
     private Date dataCriacao;

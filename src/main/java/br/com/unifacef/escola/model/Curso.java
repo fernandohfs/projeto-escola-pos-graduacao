@@ -35,7 +35,7 @@ public class Curso implements Serializable {
   private List<Materia> materias;
   private Character situacao;
   @OneToMany(mappedBy = "curso", targetEntity = Turma.class,  fetch = FetchType.LAZY)
-  @JsonManagedReference
+  @JsonManagedReference(value = "turmaReference")
   private List<Turma> turmas = new ArrayList<>();
   @CreationTimestamp
   private LocalDateTime dataCriacao;

@@ -21,9 +21,9 @@ public class MateriaValidation {
     private String titulo;
     @NotNull @Size(min = 5, max = 150)
     private String descricao;
-    private Professor professor;
     @NotNull
     private char situacao;
+    private Professor professor;
 
     public Materia converter() {
         Materia materia = new Materia();
@@ -31,8 +31,8 @@ public class MateriaValidation {
         materia.setId(getId());
         materia.setTitulo(getTitulo());
         materia.setDescricao(getDescricao());
-        materia.setProfessor(getProfessor());
         materia.setSituacao(getSituacao());
+        materia.setProfessor(getProfessor());
 
         return materia;
     }

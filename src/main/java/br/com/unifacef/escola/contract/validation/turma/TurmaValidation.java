@@ -1,8 +1,8 @@
 package br.com.unifacef.escola.contract.validation.turma;
 
 import br.com.unifacef.escola.model.Curso;
-import br.com.unifacef.escola.model.Materia;
 import br.com.unifacef.escola.model.Turma;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,9 +19,9 @@ import java.time.LocalDate;
 public class TurmaValidation {
 
     private Integer id;
-    @NotNull
+    @NotNull @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataPeriodoInicio;
-    @NotNull
+    @NotNull @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataPeriodoFim;
     @NotNull @Size(min = 5, max = 255)
     private String observacao;

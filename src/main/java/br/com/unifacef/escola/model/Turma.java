@@ -32,14 +32,13 @@ public class Turma implements Serializable {
     private Character situacao;
     @ManyToOne
     @JoinColumn(name = "curso_id")
-    @JsonBackReference
+    @JsonBackReference(value = "turmaReference")
     private Curso curso;
     @ManyToMany
     @JoinTable(
             name = "aluno_turma",
             joinColumns = @JoinColumn(name = "turma_id"),
             inverseJoinColumns = @JoinColumn(name = "aluno_id"))
-    @JsonBackReference
     private List<Aluno> alunos;
     @CreationTimestamp
     private LocalDateTime dataCriacao;

@@ -22,7 +22,7 @@ public class TurmaResponse {
     private LocalDate dataPeriodoFim;
     private String observacao;
     private Character situacao;
-    private TurmaCursoResponse turmaCursoResponse;
+    private TurmaCursoResponse curso;
 
     public TurmaResponse(Integer id, LocalDate dataPeriodoInicio, LocalDate dataPeriodoFim, String observacao,
                          Character situacao, Curso curso) {
@@ -31,7 +31,7 @@ public class TurmaResponse {
         this.dataPeriodoFim = dataPeriodoFim;
         this.observacao = observacao;
         this.situacao = situacao;
-        this.turmaCursoResponse = TurmaCursoResponse.parser(curso);
+        this.curso = TurmaCursoResponse.parser(curso);
     }
 
     public static TurmaResponse parse(Turma turma) {
