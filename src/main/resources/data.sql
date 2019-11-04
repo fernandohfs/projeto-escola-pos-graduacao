@@ -54,7 +54,6 @@ CREATE TABLE turma (
   data_criacao DATETIME NULL,
   data_atualizacao DATETIME NULL,
   PRIMARY KEY(id),
-  FOREIGN KEY(aluno_id) REFERENCES aluno(id),
   FOREIGN KEY(curso_id) REFERENCES curso(id)
 );
 
@@ -73,20 +72,3 @@ CREATE TABLE materia_curso (
   FOREIGN KEY(materia_id) REFERENCES materia(id),
   FOREIGN KEY(curso_id) REFERENCES curso(id)
 );
-
-/* Popular Professores */
-INSERT INTO professor(nome, email, data_nascimento, cpf, data_admissao, data_demissao)
-VALUES
-('Maria Vitoria', 'maria@escola.com',  '1990-01-23', '00245678915', '2010-08-13', null),
-('Fernando Costa', 'fernandocosta@escola.com',  '1989-06-30', '00678937933', '2010-08-25', null),
-('Juliana Batista', 'julianabatista@escola.com',  '1980-10-15', '00977533612', '2015-03-07', null);
-
-/* Popular Materias */
-INSERT INTO materia(titulo, descricao, situacao)
-VALUES
-('Lógica de programação I', 'Essa matéria ensina os fundamentos da programação basica', 'A'),
-('Lógica de programação II', 'Essa matéria avança no aprendizado sobre solucionar problemas com a lógica e programação', 'A'),
-('Cálculo I', 'Vai ser ensinado o básico de cálculo', 'A');
-
-
-
