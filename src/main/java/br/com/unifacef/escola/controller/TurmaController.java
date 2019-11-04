@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
@@ -38,9 +40,7 @@ public class TurmaController {
 
     @GetMapping("/{id}/alunos")
     public ResponseEntity<List<SimpleAlunoResponse>> findByIdWithAlunos(@PathVariable Integer id) {
-        List<Aluno> alunos = turmaBusiness.findById(id).getAlunos();
-
-        return ResponseEntity.ok(SimpleAlunoResponse.parse(alunos));
+        return ResponseEntity.ok(SimpleAlunoResponse.parse(turmaBusiness.findById(id).getAlunos()));
     }
 
     @PostMapping
