@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,8 @@ public class SimpleAlunoResponse {
     }
 
     public static List<SimpleAlunoResponse> parse(List<Aluno> alunos) {
+        alunos.sort(Comparator.comparing(Aluno::getNome));
+
         return alunos.stream().map(SimpleAlunoResponse::parse).collect(Collectors.toList());
     }
 }
