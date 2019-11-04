@@ -54,7 +54,6 @@ CREATE TABLE turma (
   data_criacao DATETIME NULL,
   data_atualizacao DATETIME NULL,
   PRIMARY KEY(id),
-  FOREIGN KEY(aluno_id) REFERENCES aluno(id),
   FOREIGN KEY(curso_id) REFERENCES curso(id)
 );
 
