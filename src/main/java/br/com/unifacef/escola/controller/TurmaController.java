@@ -2,13 +2,12 @@ package br.com.unifacef.escola.controller;
 
 import br.com.unifacef.escola.business.TurmaBusiness;
 import br.com.unifacef.escola.contract.response.aluno.AlunoResponse;
-import br.com.unifacef.escola.contract.response.curso.CursoResponse;
-import br.com.unifacef.escola.contract.response.materia.MateriaResponse;
+import br.com.unifacef.escola.contract.response.aluno.SimpleAlunoResponse;
 import br.com.unifacef.escola.contract.response.turma.TurmaResponse;
 import br.com.unifacef.escola.contract.response.turma.TurmaResponseList;
 import br.com.unifacef.escola.contract.validation.aluno.AlunoFlexibleValidation;
-import br.com.unifacef.escola.contract.validation.materia.MateriaValidation;
 import br.com.unifacef.escola.contract.validation.turma.TurmaValidation;
+import br.com.unifacef.escola.model.Aluno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -38,8 +37,10 @@ public class TurmaController {
     }
 
     @GetMapping("/{id}/alunos")
-    public ResponseEntity<List<AlunoResponse>> findByIdWithAlunos(@PathVariable Integer id) {
-        return ResponseEntity.ok(AlunoResponse.parse(turmaBusiness.findById(id).getAlunos()));
+    public ResponseEntity<List<SimpleAlunoResponse>> findByIdWithAlunos(@PathVariable Integer id) {
+        List<Aluno> alunos = turmaBusiness.findById(id).getAlunos();
+
+        return ResponseEntity.ok(SimpleAlunoResponse.parse(alunos));
     }
 
     @PostMapping
