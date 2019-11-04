@@ -2,6 +2,8 @@ package br.com.unifacef.escola.business.Impl;
 
 import br.com.unifacef.escola.business.CursoBusiness;
 import br.com.unifacef.escola.business.MateriaBusiness;
+import br.com.unifacef.escola.business.ProfessorBusiness;
+import br.com.unifacef.escola.config.exception.general.RelationshipIsNotEmptyException;
 import br.com.unifacef.escola.contract.validation.curso.CursoFlexibleValidation;
 import br.com.unifacef.escola.model.Curso;
 import br.com.unifacef.escola.model.Materia;
@@ -25,6 +27,9 @@ public class MateriaBusinessImpl implements MateriaBusiness {
     @Autowired
     private CursoBusiness cursoBusiness;
 
+    @Autowired
+    private ProfessorBusiness professorBusiness;
+
     @Override
     public Page<Materia> find(Pageable pageable) {
         return materiaRepository.findAll(pageable);
@@ -37,15 +42,18 @@ public class MateriaBusinessImpl implements MateriaBusiness {
 
     @Override
     public Materia create(Materia materia) {
+        attachProfessor(materia);
         return materiaRepository.save(materia);
     }
 
     @Override
     public Materia update(Integer id, Materia materiaUpdate) {
         Materia materia = materiaRepository.getOne(id);
+        attachProfessor(materiaUpdate);
         materia.update(materiaUpdate);
         return materiaRepository.save(materia);
     }
+
 
     @Override
     public void delete(Integer id) {
@@ -56,34 +64,58 @@ public class MateriaBusinessImpl implements MateriaBusiness {
      PROFESSOR
      ******/
 
+    private void attachProfessor(Materia materia) {
+        if (materia.getProfessor() != null) {
+            Professor professor = professorBusiness.findBy(materia.getProfessor().getId());
+            materia.setProfessor(professor);
+        }
+    }
+
     @Override
-    public Materia attach(Integer id, Professor professor) {
-        Materia materia = materiaRepository.getOne(id);
+    public Materia attachProfessor(Integer idMateria, Professor professor) {
+        Materia materia = materiaRepository.getOne(idMateria);
+
+        if (materia.getProfessor() != null) {
+            throw  new RelationshipIsNotEmptyException();
+        }
+
         materia.setProfessor(professor);
         return materiaRepository.save(materia);
     }
 
     @Override
-    public List<Materia> sync(List<Materia> materias, Professor professor) {
-        detachAll(professor.getId());
+    public List<Materia> attachMaterias(List<Materia> materias, Professor professor) {
+        List<Materia> newMaterias = new ArrayList<Materia>();
 
         materias.forEach(materia -> {
-            attach(materia.getId(), professor);
+            newMaterias.add(attachProfessor(materia.getId(), professor));
         });
 
-        return materias;
+        return newMaterias;
     }
 
     @Override
-    public void detach(Integer id) {
-        Materia materia = materiaRepository.getOne(id);
+    public List<Materia> syncProfessor(List<Materia> materias, Professor professor) {
+        List<Materia> newMaterias = new ArrayList<Materia>();
+        detachAllProfessor(professor.getId());
+
+        materias.forEach(materia -> {
+            newMaterias.add(attachProfessor(materia.getId(), professor));
+        });
+
+        return newMaterias;
+    }
+
+    @Override
+    public void detachProfessor(Integer idMateria) {
+        Materia materia = materiaRepository.getOne(idMateria);
         materia.setProfessor(null);
         materiaRepository.save(materia);
     }
 
     @Override
-    public void detachAll(Integer id) {
-        materiaRepository.detachAll(id);
+    public void detachAllProfessor(Integer idProfessor) {
+        materiaRepository.detachAll(idProfessor);
     }
 
     /******

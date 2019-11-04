@@ -31,7 +31,7 @@ public class Materia implements Serializable {
     private String descricao;
     @ManyToOne
     @JoinColumn(name = "professor_id")
-    @JsonBackReference(value = "materiaReference")
+    @JsonBackReference(value = "materia-professor")
     private Professor professor;
     @ManyToMany
     @JoinTable(

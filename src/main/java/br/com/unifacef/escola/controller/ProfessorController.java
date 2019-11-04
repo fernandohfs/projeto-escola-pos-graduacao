@@ -51,11 +51,11 @@ public class ProfessorController {
     @PostMapping("/{id}/materias")
     public ResponseEntity<?> createAttachMaterias(@PathVariable Integer id, @RequestBody List<@Valid MateriaFlexibleValidation> materias) {
         return ResponseEntity
-                .ok(SimpleMateriaResponse.parse(professorBusiness.attachMateria(id, materias)));
+                .ok(SimpleMateriaResponse.parse(professorBusiness.attachMaterias(id, materias)));
     }
 
     @PostMapping("/{idProfessor}/materias/{idMateria}")
-    public ResponseEntity<SimpleMateriaResponse> createAttachMaterias(@PathVariable Integer idProfessor, @PathVariable Integer idMateria) {
+    public ResponseEntity<List<SimpleMateriaResponse>> createAttachMaterias(@PathVariable Integer idProfessor, @PathVariable Integer idMateria) {
         return ResponseEntity
                 .ok(SimpleMateriaResponse.parse(professorBusiness.attachMateria(idProfessor, idMateria)));
     }
@@ -79,14 +79,14 @@ public class ProfessorController {
     }
 
     @DeleteMapping("/{idProfessor}/materias/{idMateria}")
-    public ResponseEntity<?> detachMateria(@PathVariable Integer idMateria) {
-        professorBusiness.detach(idMateria);
+    public ResponseEntity<?> detachMateria(@PathVariable Integer idProfessor, @PathVariable Integer idMateria) {
+        professorBusiness.detachMateria(idProfessor, idMateria);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @DeleteMapping("/{id}/materias")
-    public ResponseEntity<?> detachAllMateria(@PathVariable Integer id, @RequestBody @Valid List<MateriaFlexibleValidation> materias) {
-        professorBusiness.detach(materias);
+    @DeleteMapping("/{idProfessor}/materias")
+    public ResponseEntity<?> detachAllMateria(@PathVariable Integer idProfessor, @RequestBody @Valid List<MateriaFlexibleValidation> materias) {
+        professorBusiness.detachMaterias(idProfessor, materias);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

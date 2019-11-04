@@ -17,10 +17,11 @@ public interface MateriaBusiness {
     public Materia update(Integer id, Materia materiaUpdate);
     public void delete(Integer id);
     //Professor
-    public Materia attach(Integer id, Professor professor);
-    public List<Materia> sync(List<Materia> materias, Professor professor);
-    public void detach(Integer id);
-    public void detachAll(Integer id);
+    public Materia attachProfessor(Integer idMateria, Professor professor);
+    public List<Materia> attachMaterias(List<Materia> materias, Professor professor);
+    public List<Materia> syncProfessor(List<Materia> materias, Professor professor);
+    public void detachProfessor(Integer idMateria);
+    public void detachAllProfessor(Integer idProfessor);
     //Curso
     public List<Curso> attachCurso(Integer idMateria, List<CursoFlexibleValidation> materiaCursos);
     public List<Curso> attachCurso(Integer idMateria, Integer idCurso);
