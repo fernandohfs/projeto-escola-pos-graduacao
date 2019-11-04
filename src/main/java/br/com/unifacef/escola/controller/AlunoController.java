@@ -27,8 +27,12 @@ public class AlunoController {
     private AlunoBusiness alunoBusiness;
 
     @GetMapping
-    public ResponseEntity<AlunoResponseList> find(
+    public ResponseEntity<AlunoResponseList> find(@RequestParam(required = false) String nome,
             @PageableDefault(sort="id", page=0, size=10) Pageable pageable) {
+        if (nome != null) {
+            return ResponseEntity.ok().body(AlunoResponseList.parse(alunoBusiness.findByNome(nome, pageable)));
+        }
+
         return ResponseEntity.ok().body(AlunoResponseList.parse(alunoBusiness.find(pageable)));
     }
 

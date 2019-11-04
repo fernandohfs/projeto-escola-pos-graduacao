@@ -11,6 +11,7 @@ import java.util.List;
 public interface AlunoBusiness {
 
     Page<Aluno> find(Pageable pageable);
+    Page<Aluno> findByNome(String nome, Pageable pageable);
     Aluno findBy(Integer id);
     Aluno create(Aluno aluno);
     Aluno update(Integer id, Aluno aluno);

@@ -30,6 +30,11 @@ public class AlunoBusinessImpl implements AlunoBusiness {
     }
 
     @Override
+    public Page<Aluno> findByNome(String nome, Pageable pageable) {
+        return alunoRepository.findByNomeContaining(nome, pageable);
+    }
+
+    @Override
     public Aluno findBy(Integer id) {
         return alunoRepository.getOne(id);
     }

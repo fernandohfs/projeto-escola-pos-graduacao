@@ -39,6 +39,7 @@ public class Turma implements Serializable {
             name = "aluno_turma",
             joinColumns = @JoinColumn(name = "turma_id"),
             inverseJoinColumns = @JoinColumn(name = "aluno_id"))
+    @JsonBackReference("alunos")
     private List<Aluno> alunos;
     @CreationTimestamp
     private LocalDateTime dataCriacao;

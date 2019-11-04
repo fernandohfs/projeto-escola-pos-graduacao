@@ -1,5 +1,6 @@
 package br.com.unifacef.escola.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +35,7 @@ public class Aluno implements Serializable {
             name = "aluno_turma",
             joinColumns = @JoinColumn(name = "aluno_id"),
             inverseJoinColumns = @JoinColumn(name = "turma_id"))
+    @JsonBackReference("turmas")
     private List<Turma> turmas;
     @CreationTimestamp
     private LocalDateTime dataCriacao;

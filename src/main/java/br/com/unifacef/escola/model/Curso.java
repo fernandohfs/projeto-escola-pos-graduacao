@@ -1,5 +1,6 @@
 package br.com.unifacef.escola.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +33,7 @@ public class Curso implements Serializable {
           name = "materia_curso",
           joinColumns = @JoinColumn(name = "curso_id"),
           inverseJoinColumns = @JoinColumn(name = "materia_id"))
+  @JsonBackReference("materias")
   private List<Materia> materias;
   private Character situacao;
   @OneToMany(mappedBy = "curso", targetEntity = Turma.class,  fetch = FetchType.LAZY)
