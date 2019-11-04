@@ -24,6 +24,7 @@ public class AlunoResponse {
     private String email;
     private LocalDate dataNascimento;
     private String cpf;
+    private List<Turma> turmas;
     private List<Curso> cursos;
 
     public static AlunoResponse parse(Aluno aluno) {
@@ -42,6 +43,7 @@ public class AlunoResponse {
                 aluno.getEmail(),
                 aluno.getDataNascimento(),
                 aluno.getCpf(),
+                turmas,
                 cursos
         );
     }
