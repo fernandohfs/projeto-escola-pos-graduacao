@@ -6,6 +6,7 @@ import br.com.unifacef.escola.contract.response.materia.MateriaResponse;
 import br.com.unifacef.escola.contract.response.materia.MateriaResponseList;
 import br.com.unifacef.escola.contract.validation.curso.CursoFlexibleValidation;
 import br.com.unifacef.escola.contract.validation.materia.MateriaValidation;
+import br.com.unifacef.escola.model.Materia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -29,9 +30,16 @@ public class MateriaController {
         return ResponseEntity.ok(MateriaResponseList.parse(materiaBusiness.find(pageable)));
     }
 
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public ResponseEntity<MateriaResponse> findBy(@PathVariable Integer id) {
         return ResponseEntity.ok(MateriaResponse.parse(materiaBusiness.findById(id)));
+    }*/
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findBy(@PathVariable Integer id) {
+        Materia materia = materiaBusiness.findById(id);
+        materia.getCursos();
+        return ResponseEntity.ok(materia);
     }
 
     @GetMapping("/{id}/cursos")

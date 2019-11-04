@@ -32,9 +32,14 @@ public class CursoController {
         return ResponseEntity.ok().body(CursoResponseList.parse(cursoBusiness.find(pageable)));
     }
 
-    @GetMapping("/{id}")
+    /*@GetMapping("/{id}")
     public ResponseEntity<CursoResponse> findBy(@PathVariable Integer id) {
         return ResponseEntity.ok().body(CursoResponse.parse(cursoBusiness.findBy(id)));
+    }*/
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findBy(@PathVariable Integer id) {
+        return ResponseEntity.ok().body(cursoBusiness.findBy(id));
     }
 
     @GetMapping("/{id}/materias")

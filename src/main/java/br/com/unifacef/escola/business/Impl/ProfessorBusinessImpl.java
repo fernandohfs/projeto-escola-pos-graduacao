@@ -11,8 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfessorBusinessImpl implements ProfessorBusiness {
@@ -30,7 +30,7 @@ public class ProfessorBusinessImpl implements ProfessorBusiness {
 
     @Override
     public Professor findBy(Integer id) {
-        return professorRepository.getOne(id);
+        return professorRepository.findById(id).get();
     }
 
     @Override
@@ -51,45 +51,45 @@ public class ProfessorBusinessImpl implements ProfessorBusiness {
     }
 
     @Override
-    public List<Materia> attachMateria(Integer id, List<MateriaFlexibleValidation> professorMaterias) {
-        List<Materia> materias =  new ArrayList<>();
-        Professor professor = findBy(id);
-
-        professorMaterias.forEach(materia -> {
-            materias.add(materiaBusiness.attach(materia.getId(), professor));
-        });
-
-        return materias;
-    }
-
-    @Override
-    public Materia attachMateria(Integer idProfessor, Integer idMateria) {
+    public List<Materia> attachMaterias(Integer idProfessor, List<MateriaFlexibleValidation> professorMaterias) {
         Professor professor = findBy(idProfessor);
-        return materiaBusiness.attach(idMateria, professor);
+        return materiaBusiness.attachMaterias(MateriaFlexibleValidation.converterList(professorMaterias), professor);
     }
 
     @Override
-    public List<Materia> syncMaterias(Integer id, List<MateriaFlexibleValidation> professorMaterias) {
-        List<Materia> materias = MateriaFlexibleValidation.converterList(professorMaterias);
-        Professor professor = findBy(id);
-        return materiaBusiness.sync(materias, professor);
+    public List<Materia> attachMateria(Integer idProfessor, Integer idMateria) {
+        Professor professor = findBy(idProfessor);
+        Materia materia = materiaBusiness.attachProfessor(idMateria, professor);
+        return professor.getMaterias().stream().filter(m -> m.getId() != materia.getId()).collect(Collectors.toList());
     }
 
     @Override
-    public void detach(Integer idMateria) {
-        materiaBusiness.detach(idMateria);
+    public List<Materia> syncMaterias(Integer idProfessor, List<MateriaFlexibleValidation> professorMaterias) {
+        Professor professor = findBy(idProfessor);
+        return materiaBusiness.syncProfessor(MateriaFlexibleValidation.converterList(professorMaterias), professor);
     }
 
     @Override
-    public void detach(List<MateriaFlexibleValidation> materias) {
-        materias.forEach(materia -> {
-            detach(materia.getId());
+    public void detachMateria(Integer idProfessor, Integer idMateria) {
+        Professor professor = findBy(idProfessor);
+        materiaBusiness.detachProfessor(idMateria);
+    }
+
+    @Override
+    public void detachMaterias(Integer idProfessor, List<MateriaFlexibleValidation> professoMaterias) {
+        Professor professor = findBy(idProfessor);
+
+        professoMaterias.forEach(materia -> {
+            materiaBusiness.detachProfessor(materia.getId());
         });
+
+        professorRepository.save(professor);
     }
 
     @Override
-    public void detachAll(Integer idProfessor) {
-        materiaBusiness.detachAll(idProfessor);
+    public void detachAllMaterias(Integer idProfessor) {
+        Professor professor = findBy(idProfessor);
+        materiaBusiness.detachProfessor(professor.getId());
     }
 
 }

@@ -31,13 +31,14 @@ public class Materia implements Serializable {
     private String descricao;
     @ManyToOne
     @JoinColumn(name = "professor_id")
-    @JsonBackReference(value = "materiaReference")
+    @JsonBackReference(value = "materia-professor")
     private Professor professor;
     @ManyToMany
     @JoinTable(
             name = "materia_curso",
             joinColumns = @JoinColumn(name = "materia_id"),
             inverseJoinColumns = @JoinColumn(name = "curso_id"))
+    @JsonBackReference(value = "curso-materias")
     private List<Curso> cursos;
     private char situacao;
     @CreationTimestamp

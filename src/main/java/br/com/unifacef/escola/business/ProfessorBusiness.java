@@ -15,10 +15,10 @@ public interface ProfessorBusiness {
     public Professor create(Professor professor);
     public Professor update(Integer id, Professor professor);
     public void delete(Integer id);
-    public List<Materia> attachMateria(Integer id, List<MateriaFlexibleValidation> materias);
-    public Materia attachMateria(Integer idProfessor, Integer idMateria);
+    public List<Materia> attachMaterias(Integer id, List<MateriaFlexibleValidation> materias);
+    public List<Materia> attachMateria(Integer idProfessor, Integer idMateria);
     public List<Materia> syncMaterias(Integer id, List<MateriaFlexibleValidation> materias);
-    public void detach(Integer idMateria);
-    public void detach(List<MateriaFlexibleValidation> materias);
-    public void detachAll(Integer idProfessor);
+    public void detachMateria(Integer idProfessor, Integer idMateria);
+    public void detachMaterias(Integer idProfessor, List<MateriaFlexibleValidation> materias);
+    public void detachAllMaterias(Integer idProfessor);
 }
